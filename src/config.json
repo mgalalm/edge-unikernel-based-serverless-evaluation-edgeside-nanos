@@ -1,0 +1,6 @@
+{
+  "Env": {
+    "Environment": "development",
+    "NODE_DEBUG": "*"
+  }
+}
