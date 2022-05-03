@@ -1,0 +1,5 @@
+#!/bin/sh
+filename=$1
+packagename="${filename%.*}"
+cd ~/nanos/src && go build -o $packagename $filename
+

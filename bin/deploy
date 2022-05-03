@@ -1,0 +1,11 @@
+#!/bin/sh
+LOCAL_PACKAGES_PATH=$HOME/.ops/local_packages
+packagename=$1
+packagepath=$LOCAL_PACKAGES_PATH/$packagename 
+if [ ! -d $packagepath ]
+then
+    echo "No package found with this name"
+    exit 1
+fi
+cp ~/nanos/src/$packagename $packagepath
+echo "package is updated"

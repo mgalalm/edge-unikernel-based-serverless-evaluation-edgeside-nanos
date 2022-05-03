@@ -10,19 +10,25 @@ logger = logging.getLogger(__name__)
 
 r = redis.Redis(host='localhost', port=6379, db=0)
 app = flask.Flask(__name__)
-@app.route('/<unikernel_name>', methods=['GET'])
-def invoke(unikernel_name="helloworld"):
+@app.route('/<pkg_name>', methods=['GET'])
+def invoke(pkg_name="helloworld"):
 
     activation_id = uuid.uuid1()
+    image_name  = activation_id
     logging.info(f"Activation id: {activation_id}")
 
 
     # where elf lives
     os.chdir("/home/pi/src")
 
-    proc = subprocess.Popen(f"ops run {unikernel_name} -i {activation_id}", shell=True, stdout=subprocess.PIPE)
-    print(proc.pid)
+    #proc = subprocess.Popen(f"ops run {unikernel_name} -i {activation_id}", shell=True, stdout=subprocess.PIPE)
+    create_image_cmd =  f"ops image create -l --package {pkg_name} -i {activation_id}"
+    create_instance_cmd = f"ops instance create {image_name}"
+    cmd = " && ".join([create_image_cmd, create_instance_cmd])
+    proc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
     proc.wait()
+    logging.info(proc.stdout.read())
+    
     result = r.hgetall(str(activation_id))
     result['activationId'] = activation_id
     logging.info(f"Result: {result}")
