@@ -1,0 +1,2 @@
+#!/bin/sh
+kill -9 `cat ~/nanos/tmp/pid.txt` > /dev/null 2>&1

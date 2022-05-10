@@ -1,0 +1,2 @@
+#!/bin/sh
+nohup python3 ~/nanos/bin/server.py > ~/nanos/tmp/server.log 2>&1 & echo $! > ~/nanos/tmp/pid.txt

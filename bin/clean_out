@@ -1,0 +1,8 @@
+#!/bin/bash
+myarr=($(ops image list  | awk '{print $2}'))
+for i in ${myarr[@]}
+do
+  :
+  yes | ops image delete $i
+done
+
